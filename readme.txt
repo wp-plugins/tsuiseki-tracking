@@ -1,10 +1,9 @@
 === Plugin Name ===
 Contributors: nexico
-Donate link: http://www.tsuiseki.com/
 Tags: analysis, tracking, e-commerce, click fraud detection
 Requires at least: 2.9
 Tested up to: 2.9.2
-Stable tag: 1.0
+Stable tag: 1.0.1
 
 Allows tracking via the Tsuiseki tracking and data analysis system.
 
@@ -12,7 +11,7 @@ Allows tracking via the Tsuiseki tracking and data analysis system.
 
 The Tsuiseki Tracking plugin integrates the [Tsuiseki Tracking and Data Analysis](http://www.tsuiseki.com) system into
 your wordpress installation. To use this plugin a tracking key is required which you can obtain by
-[registering at our website](https://tsuiseki.com/accounts/register/).
+[registering at our website](http://www.tsuiseki.com/pricing.html).
 Afterwards you will be able to use the Tsuiseki Data Analysis system to analyse your website traffic and detect
 click fraud (e.g. click robots and click farms) from your traffic sources and react accordingly.
 
@@ -34,14 +33,22 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 
 == Changelog ==
 
+= 1.0.1 =
+* Changed the link for user registration
+* Removed the donate link
+
 = 1.0 =
 * Initial release of the wordpress plugin.
 
 == Upgrade Notice ==
 
 = General Upgrade Instructions =
-If you define settings within the source code (e.g. the `TSUISEKI_TRACKER_HMAC_KEY`) be sure to backup your old plugin
-directory and migrate your settings into the new source code file.
+If you define settings within the source code (e.g. the `TSUISEKI_TRACKER_KEY` or `TSUISEKI_TRACKER_HMAC_KEY`)
+be sure to backup your old plugin directory and migrate your settings into the new source code file.
+
+= 1.0.1 =
+Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
+migrate your changes afterwards.
 
 = 1.0 =
 No instructions needed.

@@ -436,7 +436,7 @@ function tsuiseki_tracking_settings_page() {
         <tr valign="top">
         <th scope="row">Tsuiseki Tracking Key</th>
         <td><input type="text" name="tsuiseki_tracking_key" value="<?php echo get_option('tsuiseki_tracking_key'); ?>" />
-        <span class="description">Enter your tracking key here. Without it nothing can be logged. You can get your tracking key at <a href="http://www.tsuiseki.com" target="_blank">tsuiseki.com</a>.</span>
+        <span class="description">Enter your tracking key here. Without it nothing can be logged. You can get your tracking key at <a href="http://www.tsuiseki.com/pricing.html" target="_blank">tsuiseki.com</a>.</span>
         <?php $tmp = TSUISEKI_TRACKER_KEY; if (!empty($tmp)) : ?>
         <br /><span class="error">A key is defined in your plugin file source code.</span>
         <?php endif; ?>
