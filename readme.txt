@@ -3,7 +3,7 @@ Contributors: nexico
 Tags: analysis, tracking, e-commerce, click fraud detection
 Requires at least: 2.9
 Tested up to: 2.9.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Allows tracking via the Tsuiseki tracking and data analysis system.
 
@@ -30,8 +30,13 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 == Screenshots ==
 
 1. The settings section of the Tsuiseki Tracking plugin.
+2. A screenshot of our [online demo](http://demo.tsuiseki.com) that can be tested at http://demo.tsuiseki.com.
 
 == Changelog ==
+
+= 1.0.2 =
+* Added a screenshot from our online demo
+* Adjusted the screenshot size to the wordpress.org site (560px wide)
 
 = 1.0.1 =
 * Changed the link for user registration
@@ -45,6 +50,10 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 = General Upgrade Instructions =
 If you define settings within the source code (e.g. the `TSUISEKI_TRACKER_KEY` or `TSUISEKI_TRACKER_HMAC_KEY`)
 be sure to backup your old plugin directory and migrate your settings into the new source code file.
+
+= 1.0.2 =
+Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
+migrate your changes afterwards.
 
 = 1.0.1 =
 Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
