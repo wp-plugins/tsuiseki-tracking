@@ -35,6 +35,10 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 
 == Changelog ==
 
+= 1.0.3 =
+* Renamed css class to css selector as we are using selector expressions not only class names.
+* Updated screenshot and readme
+
 = 1.0.2 =
 * Added a screenshot from our online demo
 * Adjusted the screenshot size to the wordpress.org site (560px wide)
