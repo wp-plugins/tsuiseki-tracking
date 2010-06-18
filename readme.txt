@@ -2,8 +2,8 @@
 Contributors: nexico
 Tags: analysis, tracking, e-commerce, click fraud detection
 Requires at least: 2.9
-Tested up to: 2.9.2
-Stable tag: 1.0.2
+Tested up to: 3.0
+Stable tag: 1.0.3
 
 Allows tracking via the Tsuiseki tracking and data analysis system.
 
@@ -17,10 +17,11 @@ click fraud (e.g. click robots and click farms) from your traffic sources and re
 
 == Installation ==
 
-1. Extract the `tsuiseki_tracking.tar.gz` into the `/wp-content/plugins/` directory
-1. Open the file `tsuiseki_tracking.php` and change the value of the variable `TSUISEKI_TRACKER_HMAC_KEY` at line 63.
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Get your Tsuiseki tracking key at http://www.tsuiseki.com and configure the plugin to your needs.
+1. Extract the `tsuiseki_tracking.tar.gz` into the `/wp-content/plugins/` directory or install the plugin via the admin panel.
+1. Open the file `tsuiseki_tracking.php` and change the value of the variable `TSUISEKI_TRACKER_HMAC_KEY` at line 64 (see http://www.tsuiseki.com/faq.html#2n26).
+1. Activate the plugin through the 'Plugins' menu in WordPress.
+1. Get your Tsuiseki tracking key at http://www.tsuiseki.com and set it either in the configuration menu or in the file `tsuiseki_tracking.php` at line 25.
+1. Configure the CSS selectors to track the clicks you desire (see http://www.tsuiseki.com/faq.html#2n31).
 1. If you have any further questions please visit our website for help or contact our technical support team.
 
 == Frequently Asked Questions ==
