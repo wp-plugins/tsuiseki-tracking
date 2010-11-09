@@ -8,7 +8,7 @@ Author: Nexico Consulting GmbH
 Author URI: http://www.nexico.net
 */
 session_start(); // We need to start a session to be able to use cookies in wordpress.
-// $Id: tsuiseki_tracking.php 6494 2010-04-19 11:37:22Z jens $
+// $Id: tsuiseki_tracking.php 7268 2010-11-09 15:28:15Z andre $
 /**
  * @file
  * This file contains the tsuiseki wordpress plugin.
@@ -269,7 +269,7 @@ function tsuiseki_tracking_generate_javascript() {
         };
         jQuery.ajax({
           type: 'POST',
-          url: '". get_bloginfo('wpurl') ."/wp-content/plugins/tsuiseki_tracking/tsuiseki_tracking.php?action=view',
+          url: '". get_bloginfo('wpurl') ."/wp-content/plugins/tsuiseki-tracking/tsuiseki_tracking.php?action=view',
           dataType: 'json',
           success: funcSuccess,
           data: getData
@@ -318,7 +318,7 @@ function tsuiseki_tracking_generate_javascript() {
         // Now we use Ajax to log the click.
         jQuery.ajax({
           type: 'POST',
-          url: '". get_bloginfo('wpurl') ."/wp-content/plugins/tsuiseki_tracking/tsuiseki_tracking.php?action=click',
+          url: '". get_bloginfo('wpurl') ."/wp-content/plugins/tsuiseki-tracking/tsuiseki_tracking.php?action=click',
           dataType: 'json',
           success: funcSuccess,
           async: false,
@@ -1005,7 +1005,7 @@ if (!empty($_REQUEST['action']) && !empty($_POST['ref'])) {
 register_activation_hook(__FILE__, 'tsuiseki_tracking_install');
 register_deactivation_hook(__FILE__, 'tsuiseki_tracking_uninstall');
 // Enqueue our javascript for inclusion and give info that we need jquery.
-wp_enqueue_script('tsuiseki_js', get_bloginfo('wpurl') .'/wp-content/plugins/tsuiseki_tracking/tsuiseki_tracking.js', array('jquery'));
+wp_enqueue_script('tsuiseki_js', get_bloginfo('wpurl') .'/wp-content/plugins/tsuiseki-tracking/tsuiseki_tracking.js', array('jquery'));
 // Define the ajax callbacks for views and clicks.
 add_action('wp_ajax_tsuiseki_tracking_click', 'tsuiseki_tracking_click');
 add_action('wp_ajax_tsuiseki_tracking_view', 'tsuiseki_tracking_view');
