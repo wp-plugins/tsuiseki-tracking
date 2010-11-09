@@ -3,7 +3,7 @@ Contributors: nexico
 Tags: analysis, tracking, e-commerce, click fraud detection
 Requires at least: 2.9
 Tested up to: 3.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 Allows tracking via the Tsuiseki tracking and data analysis system.
 
@@ -35,6 +35,9 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 
 == Changelog ==
 
+= 1.0.4 =
+* Fixing some tracking relevant bugs
+
 = 1.0.3 =
 * Renamed css class to css selector as we are using selector expressions not only class names.
 * Updated screenshot and readme
@@ -55,6 +58,14 @@ Please refer to our official FAQ at http://www.tsuiseki.com/faq.html.
 = General Upgrade Instructions =
 If you define settings within the source code (e.g. the `TSUISEKI_TRACKER_KEY` or `TSUISEKI_TRACKER_HMAC_KEY`)
 be sure to backup your old plugin directory and migrate your settings into the new source code file.
+
+= 1.0.4 =
+Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
+migrate your changes afterwards.
+
+= 1.0.3 =
+Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
+migrate your changes afterwards.
 
 = 1.0.2 =
 Be sure to backup your old tsuiseki_tracking.php if you defined settings directly in the source code. Thus you can
