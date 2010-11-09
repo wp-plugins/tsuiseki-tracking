@@ -16,7 +16,7 @@ session_start(); // We need to start a session to be able to use cookies in word
  * @author Jens Jahnke <jan0sch@gmx.net>
  */
 /**
- * Here you can define your tsuiseki tracking key e.g. `define('TSUISEKI_TRACKER_KEY', 'MY_TRACKING_KEY');`.
+ * Here you can define your tsuiseki tracking key.
  * This define is intended to speed things up. If you leave it empty
  * each view/click will cost you an additional database query for looking
  * up the key (variable_get).
@@ -25,8 +25,8 @@ session_start(); // We need to start a session to be able to use cookies in word
 define('TSUISEKI_TRACKER_KEY', NULL);
 
 /**
- * The CSS selector for outgoing links e.g. `a.my_link_class`.
- * FIXME Please enter the css selector expression of the links you want to track here.
+ * The CSS class for outgoing links.
+ * FIXME Please enter the css class of the links you want to track here.
  */
 define('TSUISEKI_TRACKER_CSS_CLASS', NULL);
 
@@ -57,8 +57,7 @@ define('TSUISEKI_TRACKER_COOKIE_VIEW_COUNTER_NAME', 'TS_VIEWS');
 define('TSUISEKI_TRACKER_HMAC_ALGORITHM', 'sha256');
 
 /**
- * The secret key we use to proofe the integrity of our cookies. Any character except ' is allowed.
- * To generate a usefull hmac key you should run the command `pwgen -cnsy 63` on a linux or bsd terminal.
+ * The secret key we use to proofe the integrity of our cookies.
  * FIXME You must change this and it should not be too short!
  */
 define('TSUISEKI_TRACKER_HMAC_KEY', 'JBOab!,`t?\:>f&R{A\P2gp!+W|s-U66]&t/[{~W}[!#>K92f/N@7aQfvcR!>:Cn');
@@ -160,6 +159,7 @@ function tsuiseki_tracking_buffer_data() {
   else {
     $_SESSION[TSUISEKI_TRACKER_COOKIE_VIEW_COUNTER_NAME] = 1;
   }
+  $_SESSION['TSUISEKI_TRACKER_KEY'] = (string)trim(tsuiseki_tracking_get_key());
 
   return $dirty;
 } // function tsuiseki_tracking_buffer_data
@@ -200,7 +200,8 @@ function tsuiseki_tracking_click($data) {
     $click_type = (string)(trim($t_parts[8]));
     $click_bits = (string)trim($t_parts[9]);
   }
-  $key = tsuiseki_tracking_get_key();
+
+  $key = (string)trim($_SESSION['TSUISEKI_TRACKER_KEY']);
   if (!empty($src_url) && !empty($key)) {
     $ref = urldecode($src_url);
     $data = (string)(trim(tsuiseki_tracking_get_data($ref)));
@@ -219,7 +220,13 @@ function tsuiseki_tracking_click($data) {
     }
     curl_close($ch);
   }
-  return 0;
+  // generate the response
+  $response = json_encode( array( 'success' => true ) );
+  // response output
+  header( "Content-Type: application/json" );
+  echo $response;
+  exit;
+  //return 0;
 } // function tsuiseki_tracking_click
 
 /**
@@ -246,7 +253,7 @@ function tsuiseki_tracking_generate_javascript() {
   if ($track === TRUE) {
     $output = '<script type="text/javascript" charset="UTF-8">';
     $bits_variable = 'cb'. hash('md5', uniqid() . mt_rand());
-    $css = TSUISEKI_TRACKER_CSS_CLASS;
+    $css = tsuiseki_tracking_get_css_class();
     $output .= "jQuery(document).ready(function() {
       // This function is for logging the view.
       function track_view() {
@@ -314,8 +321,10 @@ function tsuiseki_tracking_generate_javascript() {
           url: '". get_bloginfo('wpurl') ."/wp-content/plugins/tsuiseki_tracking/tsuiseki_tracking.php?action=click',
           dataType: 'json',
           success: funcSuccess,
+          async: false,
           data: getData
         });
+        
         $bits_variable = 0;
         // By returning true we assure that the link is handled by the browser.
         return true;
@@ -329,9 +338,9 @@ function tsuiseki_tracking_generate_javascript() {
 } // function tsuiseki_tracking_generate_javascript
 
 /**
- * Returns the css selector for outgoing links that should be tracked.
+ * Returns the css class for outgoing links that should be tracked.
  *
- * @return string The css selector that should be tracked for clicks.
+ * @return string The css class that should be tracked for clicks.
  */
 function tsuiseki_tracking_get_css_class() {
   $css = TSUISEKI_TRACKER_CSS_CLASS;
@@ -405,7 +414,7 @@ function tsuiseki_tracking_get_data($ref = '') {
 function tsuiseki_tracking_get_key() {
   $key = TSUISEKI_TRACKER_KEY;
   if (empty($key)) {
-    $key = (string)trim(get_option(''));
+    $key = (string)trim(get_option('tsuiseki_tracking_key'));
   }
   return $key;
 } // function tsuiseki_tracking_get_key
@@ -430,14 +439,14 @@ function tsuiseki_tracking_settings_page() {
 ?>
 <div class="wrap">
 <h2>Tsuiseki Tracking Plugin</h2>
-<p>Please remind that a key or a css selector defined within the source code will overwrite any changes you make here.</p>
+<p>Please remind that a key or a css class defined within the source code will overwrite any changes you make here.</p>
 <form method="post" action="options.php">
     <?php settings_fields( 'tsuiseki-tracking-settings' ); ?>
     <table class="form-table">
         <tr valign="top">
         <th scope="row">Tsuiseki Tracking Key</th>
         <td><input type="text" name="tsuiseki_tracking_key" value="<?php echo get_option('tsuiseki_tracking_key'); ?>" />
-        <span class="description">Enter your tracking key here. Without it nothing can be logged. You can get your tracking key at <a href="http://www.tsuiseki.com/pricing.html" target="_blank">tsuiseki.com</a>.</span>
+        <span class="description">Enter your tracking key here. Without it nothing can be logged. You can get your tracking key at <a href="http://www.tsuiseki.com" target="_blank">tsuiseki.com</a>.</span>
         <?php $tmp = TSUISEKI_TRACKER_KEY; if (!empty($tmp)) : ?>
         <br /><span class="error">A key is defined in your plugin file source code.</span>
         <?php endif; ?>
@@ -445,11 +454,11 @@ function tsuiseki_tracking_settings_page() {
         </tr>
 
         <tr valign="top">
-        <th scope="row">Tsuiseki Tracking CSS Selector</th>
+        <th scope="row">Tsuiseki Tracking CSS Class</th>
         <td><input type="text" name="tsuiseki_tracking_css_class" value="<?php echo get_option('tsuiseki_tracking_css_class'); ?>" />
-        <span class="description">Define a CSS selector for outgoing links. This is used for click tracking via ajax.</span>
+        <span class="description">Define a CSS class for outgoing links. This is used for click tracking via ajax.</span>
         <?php $tmp = TSUISEKI_TRACKER_CSS_CLASS; if (!empty($tmp)) : ?>
-        <br /><span class="error">A css selector is defined in your plugin file source code.</span>
+        <br /><span class="error">A css class is defined in your plugin file source code.</span>
         <?php endif; ?>
         </td>
         </tr>
@@ -511,7 +520,7 @@ function tsuiseki_tracking_view($data) {
       }
     }
   }
-  $key = tsuiseki_tracking_get_key();
+  $key = (string)trim($_SESSION['TSUISEKI_TRACKER_KEY']);
   if (!empty($src_url) && !empty($key)) {
     $ref = urldecode($src_url);
     $data = (string)(trim(tsuiseki_tracking_get_data($ref)));
@@ -530,7 +539,14 @@ function tsuiseki_tracking_view($data) {
     }
     curl_close($ch);
   }
-  return 0;
+
+  // generate the response
+  $response = json_encode( array( 'success' => true ) );
+  // response output
+  header( "Content-Type: application/json" );
+  echo $response;
+  exit;
+  //return 0;
 } // function tsuiseki_tracking_view
 
 /**
